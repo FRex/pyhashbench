@@ -4,6 +4,7 @@ Small script to benchmark a few hashing algorithms. Reports lowest times.
 
 If `blake3` and `xxhash` are available they will be benchmarked as well.
 
+Example output:
 ```
 $ python3 pyhashbench.py
 1024 MiB, 3 repetitions
