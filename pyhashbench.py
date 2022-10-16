@@ -101,3 +101,4 @@ def main(megs, repetitions):
 
 if __name__ == '__main__':
     main(1024, 3)
+    print(f"Version: {sys.version}")
