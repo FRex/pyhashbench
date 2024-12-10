@@ -34,3 +34,27 @@ Version: 3.11.3 (tags/v3.11.3:f3909b8, Apr  4 2023, 23:49:59) [MSC v.1934 64 bit
 
 Total time taken: 30.590 seconds
 ```
+
+Example output with 32 bit Python 3.6 (noticeably slower and without third party hashes):
+
+```
+$ anypython 3.6 pyhashbench.py
+Failed to import blake3: No module named 'blake3'
+Failed to import xxhash: No module named 'xxhash'
+Version: 3.6.0 (v3.6.0:41df79263a11, Dec 23 2016, 07:18:10) [MSC v.1900 32 bit (Intel)]
+
+1024 MiB, 3 repetitions, best (lowest) time taken
+
+ Algorithm       | Repr                               |  Time |       Speed
+-----------------|------------------------------------|-------|-------------
+ zlib.adler32    | <built-in function adler32>        | 0.270 | 3789.9 MiB/s
+ hashlib.sha1    | <built-in function openssl_sha1>   | 0.495 | 2069.2 MiB/s
+ hashlib.sha256  | <built-in function openssl_sha256> | 0.543 | 1886.6 MiB/s
+ zlib.crc32      | <built-in function crc32>          | 0.708 | 1445.7 MiB/s
+ hashlib.md5     | <built-in function openssl_md5>    | 1.262 |  811.3 MiB/s
+ hashlib.blake2s | <class '_blake2.blake2s'>          | 2.550 |  401.5 MiB/s
+ hashlib.sha512  | <built-in function openssl_sha512> | 3.463 |  295.7 MiB/s
+ hashlib.blake2b | <class '_blake2.blake2b'>          | 3.976 |  257.6 MiB/s
+
+Total time taken: 40.046 seconds
+```
