@@ -8,13 +8,11 @@ try:
     import blake3
 except ImportError as e:
     print(f"Failed to import blake3: {e}", file=sys.stderr)
-    blake3 = {}
 
 try:
     import xxhash
 except ImportError as e:
     print(f"Failed to import xxhash: {e}", file=sys.stderr)
-    xxhash = {}
 
 # NOTE: this is to force VS Code to not mark these as unused
 type((zlib, blake3, xxhash, hashlib))
@@ -48,18 +46,16 @@ def format_pretty_table(origdata, rjust=()) -> str:
 Result = collections.namedtuple("Result", "source repr size time speed")
 
 
-def prettify_result(r: Result) -> Result:
-    source = r.source
-    rep = r.repr
-    size = f"{round(r.size / 1024 ** 2, 1)} MiB"
-    time = f"{r.time:.3f}"
-    speed = f"{round(r.speed / 1024 ** 2, 1)} MiB/s"
-    return Result(source, rep, size, time, speed)
+def prettify_result(r: Result) -> tuple:
+    speed = f" {round(r.speed / 1024 ** 2, 1)} MiB/s"
+    return (f" {r.source} ", f" {r.repr} ", f" {r.time:.3f} ", speed)
 
 
 def main(megs, repetitions):
     starttime = time.time()
-    print(f"{megs} MiB, {repetitions} repetitions")
+
+    # NOTE: newline for separation
+    print(f"{megs} MiB, {repetitions} repetitions, best (lowest) time taken\n")
     algonames = [
         "blake3.blake3",
         "hashlib.sha1",
@@ -105,13 +101,13 @@ def main(megs, repetitions):
 
     results = sorted(results, key=lambda r: r.time)
     results = list(map(prettify_result, results))
-    results = [Result._fields, None] + results
+    results = [(" Algorithm ", " Repr ", " Time ", " Speed "), None] + results
+    print(format_pretty_table(results, rjust=(2, 3)))  # 2, 3 = Time and Speed
 
-    rjust = (Result._fields.index("time"), Result._fields.index("speed"))
-    print(format_pretty_table(results, rjust))
-    print(f"Total time taken: {time.time() - starttime:.3f} seconds")
+    # NOTE: newline for separation
+    print(f"\nTotal time taken: {time.time() - starttime:.3f} seconds")
 
 
 if __name__ == "__main__":
+    print(f"Version: {sys.version}\n")  # NOTE: newline for separation
     main(1024, 3)
-    print(f"Version: {sys.version}")
