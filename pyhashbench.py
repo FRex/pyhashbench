@@ -80,7 +80,7 @@ def main(megs, repetitions):
     results = []
     for name, algo in algos:
         times = []
-        for i in range(repetitions):
+        for _ in range(repetitions):
             a = time.perf_counter_ns()
             algo(data)
             b = time.perf_counter_ns()
@@ -95,8 +95,8 @@ def main(megs, repetitions):
                     10**9 * len(data) / min(times),
                 )
             )
-        except ZeroDivisionError as e:
-            print(name, e)
+        except ZeroDivisionError as err:
+            print(name, err, file=sys.stderr)
             # results.append(Result(name, repr(algo), len(data), min(times), math.inf))
 
     results = sorted(results, key=lambda r: r.time)
