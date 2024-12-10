@@ -10,11 +10,13 @@ try:
     import blake3
 except ImportError as e:
     print(f"Failed to import blake3: {e}", file=sys.stderr)
+    blake3 = None  # NOTE: for the line later using blake3
 
 try:
     import xxhash
 except ImportError as e:
     print(f"Failed to import xxhash: {e}", file=sys.stderr)
+    xxhash = None  # NOTE: for the line later using xxhash
 
 # NOTE: this is to force VS Code to not mark these as unused
 type((zlib, blake3, xxhash, hashlib))
