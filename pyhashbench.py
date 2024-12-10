@@ -1,3 +1,5 @@
+"""Python script to benchmark the hashing algorithms."""
+
 import collections
 import hashlib
 import time
@@ -19,6 +21,8 @@ type((zlib, blake3, xxhash, hashlib))
 
 
 def format_pretty_table(origdata, rjust=()) -> str:
+    """Format a table using ASCII symbols for column and row separators."""
+
     data = [None if row is None else tuple(map(str, row)) for row in origdata]
     colcount = max(map(len, (row for row in data if row is not None)))
     maxlens = colcount * [0]
@@ -47,11 +51,14 @@ Result = collections.namedtuple("Result", "source repr size time speed")
 
 
 def prettify_result(r: Result) -> tuple:
+    """Turn raw numbers into human readable ones like MiB/s, round them, etc."""
     speed = f" {round(r.speed / 1024 ** 2, 1)} MiB/s"
     return (f" {r.source} ", f" {r.repr} ", f" {r.time:.3f} ", speed)
 
 
 def main(megs, repetitions):
+    """Main function to run the test repetitions times on megs MiB of data."""
+
     starttime = time.time()
 
     # NOTE: newline for separation
