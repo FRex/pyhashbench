@@ -1,4 +1,4 @@
-"""Python script to benchmark the hashing algorithms."""
+"""Python 3.6+ script to benchmark the hashing algorithms."""
 
 import collections
 import hashlib
@@ -90,9 +90,9 @@ def main(megs, repetitions):
     for name, algo in algos:
         times = []
         for _ in range(repetitions):
-            a = time.perf_counter_ns()
+            a = time.perf_counter()
             algo(data)
-            b = time.perf_counter_ns()
+            b = time.perf_counter()
             times.append(b - a)
         try:
             results.append(
@@ -100,8 +100,8 @@ def main(megs, repetitions):
                     name,
                     repr(algo),
                     len(data),
-                    min(times) / 10**9,
-                    10**9 * len(data) / min(times),
+                    min(times),
+                    len(data) / min(times),
                 )
             )
         except ZeroDivisionError as err:

@@ -2,7 +2,12 @@
 
 Small script to benchmark a few hashing algorithms. Reports lowest times.
 
-If `blake3` and `xxhash` are available they will be benchmarked as well.
+If [blake3](https://pypi.org/project/blake3/) and [xxhash](https://pypi.org/project/xxhash/)
+are available they will be benchmarked as well.
+
+Requires (and works on any) Python 3.6 or above, as tested using
+[https://github.com/FRex/anypython](https://github.com/FRex/anypython),
+due to usage of [f-strings](https://docs.python.org/3/reference/lexical_analysis.html#f-strings).
 
 Example output:
 
